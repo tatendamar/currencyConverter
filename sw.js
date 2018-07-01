@@ -1,14 +1,13 @@
-importScripts('./js/idb.js');
-importScripts('./js/utils.js');
+importScripts('/js/idb.js');
+importScripts('/js/utils.js');
 
 
-const CACHE_VERSION = 'static-v9';
+const CACHE_VERSION = 'static-v10';
 const CACHE_DYNAMIC_VERSION = 'dynamic-v5'
 
 //install service worker
 self.addEventListener('install', function(event){
   console.log(`installing the service worker... ${event}`);
-  if(event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin'){
   event.waitUntil(
     caches.open(CACHE_VERSION)
     .then(function(cache){
@@ -16,17 +15,14 @@ self.addEventListener('install', function(event){
       cache.addAll([
         './',
         './index.html',
-        './style.css',
-        './css/bootstrap.min.css',
-        './js/bootstrap.min.js',
         './js/idb.js',
         './js/app.js',
+        './style.css',
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
       ])
     })
   );
-  }
 });
 
 //trimcache  method to reduce the number of dynamic cached items
@@ -47,7 +43,6 @@ function cacheTrim(cacheName, numItems){
 //activating  service worker
 self.addEventListener('activate', function(event){
   console.log(`activating the service worker... ${event}`);
-  if(event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin'){
   event.waitUntil(
     caches.keys()
     .then(function(keyList){
@@ -60,7 +55,6 @@ self.addEventListener('activate', function(event){
     })
   );
   return self.clients.claim();
- }
 });
 
 //fetching 
