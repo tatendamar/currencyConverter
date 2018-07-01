@@ -18,8 +18,8 @@ self.addEventListener('install', function(event){
         './js/idb.js',
         './js/app.js',
         '/style.css',
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
-        'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
+        './https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
+        './https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
       ])
     })
   );
