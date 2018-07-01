@@ -8,7 +8,7 @@ const CACHE_DYNAMIC_VERSION = 'dynamic-v5'
 //install service worker
 self.addEventListener('install', function(event){
   console.log(`installing the service worker... ${event}`);
-  if(event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin'){
+
   event.waitUntil(
     caches.open(CACHE_VERSION)
     .then(function(cache){
@@ -26,7 +26,7 @@ self.addEventListener('install', function(event){
       ])
     })
   );
-  }
+  
 });
 
 //trimcache  method to reduce the number of dynamic cached items
@@ -47,7 +47,7 @@ function cacheTrim(cacheName, numItems){
 //activating  service worker
 self.addEventListener('activate', function(event){
   console.log(`activating the service worker... ${event}`);
-  if(event.request.cache === 'only-if-cached' && event.request.mode !== 'same-origin'){
+
   event.waitUntil(
     caches.keys()
     .then(function(keyList){
@@ -60,7 +60,7 @@ self.addEventListener('activate', function(event){
     })
   );
   return self.clients.claim();
- }
+
 });
 
 //fetching 
