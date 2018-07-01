@@ -5,10 +5,12 @@ if(!window.Promise){
 }
 
 if("serviceWorker" in navigator){
+  window.addEventListener('load', function() {
   navigator.serviceWorker
   .register('/sw.js')
   .then(() => console.log('worker registered'))
   .catch(err => console.log(err));
+  });
 }
 
 
