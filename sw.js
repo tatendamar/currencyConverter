@@ -1,5 +1,5 @@
-importScripts('/js/idb.js');
-importScripts('/js/utils.js');
+importScripts('./js/idb.js');
+importScripts('./js/utils.js');
 
 
 const CACHE_VERSION = 'static-v10';
