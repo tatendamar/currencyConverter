@@ -7,7 +7,7 @@ if(!window.Promise){
 if("serviceWorker" in navigator){
   window.addEventListener('load', function() {
   navigator.serviceWorker
-  .register('/https://github.com/tatendamar/currencyConverter.github.io/blob/master/sw.js/',{scope: '/https://github.com/tatendamar/currencyConverter.github.io/'})
+  .register('/currencyConverter.github.io/blob/master/sw.js/',{scope: '/currencyConverter.github.io/'})
   .then(() => console.log('worker registered'))
   .catch(err => console.log(err));
   });
