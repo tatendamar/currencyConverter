@@ -16,9 +16,11 @@ self.addEventListener('install', function(event){
       cache.addAll([
         './',
         './index.html',
+        './style.css',
+        './css/bootstrap.min.css',
+        './js/bootstrap.min.js',
         './js/idb.js',
         './js/app.js',
-        './style.css',
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
       ])
