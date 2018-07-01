@@ -14,9 +14,9 @@ self.addEventListener('install', function(event){
       console.log('Precaching app shell..');
       cache.addAll([
         '/https://github.com/tatendamar/currencyConverter.github.io/',
-        '/https://github.com/tatendamar/currencyConverter.github.io/blob/master/index.html',
-        '/https://github.com/tatendamar/currencyConverter.github.io/blob/master/js/idb.js',
-        '/https://github.com/tatendamar/currencyConverter.github.io/blob/master/js/app.js',
+        '/https://github.com/tatendamar/currencyConverter.github.io/blob/master/index.html/',
+        '/https://github.com/tatendamar/currencyConverter.github.io/blob/master/js/idb.js/',
+        '/https://github.com/tatendamar/currencyConverter.github.io/blob/master/js/app.js/',
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js',
       ])
