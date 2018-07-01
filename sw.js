@@ -7,11 +7,11 @@ const CACHE_DYNAMIC_VERSION = 'dynamic-v5'
 
 //install service worker
 self.addEventListener('install', function(event){
-  console.log(`installing the service worker... ${event}`);
+ 
   event.waitUntil(
     caches.open(CACHE_VERSION)
     .then(function(cache){
-      console.log('Precaching app shell..');
+      
       cache.addAll([
         './',
         './index.html',
@@ -42,16 +42,15 @@ function cacheTrim(cacheName, numItems){
 
 //activating  service worker
 self.addEventListener('activate', function(event){
-  console.log(`activating the service worker... ${event}`);
+ 
   event.waitUntil(
     caches.keys()
     .then(function(keyList){
       return Promise.all(keyList.map(function(key){
         if(key !== CACHE_VERSION && key !==CACHE_DYNAMIC_VERSION){
-          console.log(`Removing old cache... ${key}`);
           return caches.delete(key);
         }
-      }))
+      }));
     })
   );
   return self.clients.claim();
@@ -68,15 +67,13 @@ self.addEventListener('fetch', function(event){
         //retrieve data saved in indexeddb
         readAllData('currency')
         .then(function(data){
-           console.log('From cache', data);
             data.forEach(function(key){
               if(key){
-                console.log('Returned',key);
                 return key;
               }
-            })
-          })
-        }
+            });
+          });
+        };
         //cache items dynamically
         return fetch(event.request)
         .then(function(res){
@@ -86,7 +83,7 @@ self.addEventListener('fetch', function(event){
             cache.put(event.request, res.clone());
             return res;
             })
-           })
+           });
           })
         );
         //respond with network fetch  and save to the indexeddb
@@ -96,12 +93,10 @@ self.addEventListener('fetch', function(event){
            const cloneResponse = res.clone()
             cloneResponse.json()
             .then(function(data){
-              console.log(data);
               for(key in data){
-                console.log(data[key])
                  writeData('currency', data[key]);
               }
-            })
+            });
             return res;
           })
         .catch(function(err){

@@ -19,8 +19,7 @@ document.getElementById('convert').addEventListener('click', function(e){
   calculateRes();
   setTimeout(function(){
     document.getElementById('results').style.display = 'none';
-  }, 5000);
-  
+  }, 20000);
   e.preventDefault();
 });
 
@@ -37,7 +36,7 @@ function calculateRes(res){
   const toCurrency = to.toUpperCase();
   const query =  fromCurrency +'_'+ toCurrency;
 
-
+  //api
   const url = 'https://free.currencyconverterapi.com/api/v5/convert?q='+ query +'';
 
       const req = new Request(url, {mode: 'cors'});
@@ -50,7 +49,6 @@ function calculateRes(res){
             from = `<option value="${data.results[key].fr}">${ data.results[key].fr}</option>`;
 
             to = `<option value="${data.results[key].to}">${ data.results[key].to}</option>`;
-            
             const val = parseFloat(data.results[key].val);
 
             if(val){
@@ -58,13 +56,9 @@ function calculateRes(res){
               result.value = Math.round(total * 100)/100;
             }
         }
-
-
         document.getElementById('results').style.display = 'block';
-
-        
       });
-  }
+  };
 
 //iife for currency format
 (function selectIndex(){
@@ -76,14 +70,13 @@ function calculateRes(res){
    fetch(req1)
    .then(function(res){
     return res.json();
-    })
+     })
     .then(function(data1){
     let output = '';
     for(i in data1.results){
       output += `<option> ${i} </option>`;
        }
         hint.innerHTML = output;
-
   });
 })();
 

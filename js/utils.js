@@ -12,10 +12,10 @@ function writeData(name, data){
     const tx = db.transaction(name, 'readwrite');
     const store = tx.objectStore(name);
     store.put(data);
-    console.log(data);
+   
     return tx.complete;
  });
-}
+};
 
 //method to read data from indexeddb
 function readAllData(name){
@@ -23,7 +23,7 @@ function readAllData(name){
   .then(function(db){
     const tx = db.transaction(name, 'readonly');
     const store = tx.objectStore(name);
-    console.log(store.getAll());
+  
     return store.getAll();
   });
-}
+};
