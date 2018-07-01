@@ -1,7 +1,11 @@
-const CACHE_VERSION = 'static-v1';
-const CACHE_DYNAMIC_VERSION = 'dynamic-v1'
+importScripts('/js/idb.js');
+importScripts('/js/utils.js');
 
 
+const CACHE_VERSION = 'static-v9';
+const CACHE_DYNAMIC_VERSION = 'dynamic-v5'
+
+//install service worker
 self.addEventListener('install', function(event){
   console.log(`installing the service worker... ${event}`);
   event.waitUntil(
@@ -11,6 +15,7 @@ self.addEventListener('install', function(event){
       cache.addAll([
         '/',
         '/index.html',
+        '/js/idb.js',
         '/js/app.js',
         '/style.css',
         'https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css',
@@ -20,7 +25,22 @@ self.addEventListener('install', function(event){
   );
 });
 
+//trimcache  method to reduce the number of dynamic cached items
 
+function cacheTrim(cacheName, numItems){
+  caches.open(cacheName)
+  .then(function(cache){
+    return cache.keys()
+    .then(function(keys){
+      if(keys.length > numItems){
+        cache.delete(keys[0])
+        .then(cacheTrim(cacheName, numItems));
+      }
+    });
+  })
+};
+
+//activating  service worker
 self.addEventListener('activate', function(event){
   console.log(`activating the service worker... ${event}`);
   event.waitUntil(
@@ -37,6 +57,7 @@ self.addEventListener('activate', function(event){
   return self.clients.claim();
 });
 
+//fetching 
 self.addEventListener('fetch', function(event){
   event.respondWith(
     caches.match(event.request)
@@ -44,18 +65,47 @@ self.addEventListener('fetch', function(event){
       if(response){
         return response;
       } else {
+        //retrieve data saved in indexeddb
+        readAllData('currency')
+        .then(function(data){
+           console.log('From cache', data);
+            data.forEach(function(key){
+              if(key){
+                console.log('Returned',key);
+                return key;
+              }
+            })
+          })
+        }
+        //cache items dynamically
         return fetch(event.request)
         .then(function(res){
           return caches.open(CACHE_DYNAMIC_VERSION)
           .then(function(cache){
-            cache.put(event.request.url, res.clone())
+            cacheTrim(CACHE_DYNAMIC_VERSION, 15)
+            cache.put(event.request, res.clone());
+            return res;
+            })
+           })
+          })
+        );
+        //respond with network fetch  and save to the indexeddb
+       event.respondWith(
+         fetch(event.request)
+        .then(function(res){
+           const cloneResponse = res.clone()
+            cloneResponse.json()
+            .then(function(data){
+              console.log(data);
+              for(key in data){
+                console.log(data[key])
+                 writeData('currency', data[key]);
+              }
+            })
             return res;
           })
-        })
         .catch(function(err){
-
+          console.log(err);
         })
-      }
-    })
   );
 });

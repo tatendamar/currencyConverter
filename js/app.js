@@ -12,14 +12,18 @@ if("serviceWorker" in navigator){
 }
 
 
-
+//event for calculating the currencies
 document.getElementById('convert').addEventListener('click', function(e){
   calculateRes();
-
+  setTimeout(function(){
+    document.getElementById('results').style.display = 'none';
+  }, 5000);
+  
   e.preventDefault();
 });
 
-function calculateRes(){
+//function to calculate the currency 
+function calculateRes(res){
 
   let from = document.getElementById('from').value;
   const amount = document.getElementById('amount').value;
@@ -56,11 +60,11 @@ function calculateRes(){
 
         document.getElementById('results').style.display = 'block';
 
-       // document.getElementById('loading').style.display = 'none';
+        
       });
   }
 
-
+//iife for currency format
 (function selectIndex(){
   let hint = document.getElementById('hint');
 
