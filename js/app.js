@@ -40,7 +40,7 @@ function calculateRes(res){
 
   const url = 'https://free.currencyconverterapi.com/api/v5/convert?q='+ query +'';
 
-      const req = new Request(url);
+      const req = new Request(url, {mode: 'cors'});
       fetch(req)
        .then(function(response){
          return response.json();
